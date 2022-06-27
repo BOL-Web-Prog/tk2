@@ -27,7 +27,10 @@
 <link rel="stylesheet" href="{{ URL::asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ URL::asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ URL::asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+</style>
 
 <body class="sidebar-mini layout-fixed sidebar-closed" style="height: auto;">
 <div class="wrapper">
@@ -228,9 +231,9 @@ Users
 </li>
 <li class="nav-item">
     @if($meta=='Product')
-    <a href="" class="nav-link active">
+    <a href="{{route('productList')}}" class="nav-link active">
     @else
-    <a href="" class="nav-link">
+    <a href="{{route('productList')}}" class="nav-link">
     @endif
 <i class="nav-icon fas fa-table"></i>
 <p>
@@ -268,6 +271,144 @@ Products
 @yield('content')
 
 </section>
+
+<div class="modal fade show open_modal" id="modal-default" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Edit User</h4>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ <span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">
+<form action="{{ route('userUpdate') }}" method="POST">
+@csrf
+<table class="table">
+    <input type="hidden" name="id" id="id_user" required>
+    <tr>
+        <th>Nama</th>
+        <td><input type="text" class="form-control" id="name" name="name" required></td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td><input type="email" class="form-control" id="email" name="email" required></td>
+    </tr>
+    <tr>
+        <th>Tempat Lahir</th>
+        <td><input type="text" class="form-control" id="birthplace" name="birthplace" required></td>
+    </tr>
+    <tr>
+        <th>Tanggal Lahir</th>
+        <td><input type="date" class="form-control" id="birthdate" name="birthdate" required></td>
+    </tr>
+    <tr>
+        <th>Jenis Kelamin</th>
+        <td><input type="radio" id="laki" value="Laki-Laki" name="gender"> Laki-Laki <input type="radio" id="wanita" name="gender" value="Wanita"> Wanita</td>
+    </tr>
+</table>
+</div>
+<div class="modal-footer justify-content-between">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade show add_modal" id="modal-add" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Tambah Produk</h4>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ <span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">
+<form action="{{ route('productAdd') }}" method="POST" enctype="multipart/form-data">
+@csrf
+<table class="table">
+    <tr>
+        <th>Nama</th>
+        <td><input type="text" class="form-control" id="name" name="name" required></td>
+    </tr>
+    <tr>
+        <th>Deskripsi</th>
+        <td><textarea name="description" class="form-control" id="description" cols="8" rows="5"></textarea></td>
+    </tr>
+    <tr>
+        <th>Harga Beli</th>
+        <td><input type="number" min=0 class="form-control" id="basePrice" name="basePrice" required></td>
+    </tr>
+    <tr>
+        <th>Harga Jual</th>
+        <td><input type="number" min=1 class="form-control" id="sellingPrice" name="sellingPrice" required></td>
+    </tr>
+    <tr>
+        <th>Foto Produk</th>
+        <td><input type="file" class="form-control" accept="image/gif, image/jpeg, image/png" id="images" name="images" required></td>
+    </tr>
+</table>
+</div>
+<div class="modal-footer justify-content-between">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade show edit_modal" id="modal-edit" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">Edit Produk</h4>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ <span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">
+<form action="{{ route('productUpdate') }}" method="POST" enctype="multipart/form-data">
+@csrf
+<table class="table">
+    <input type="hidden" name="id" id="id_productEdit" required>
+    <tr>
+        <th>Nama</th>
+        <td><input type="text" class="form-control" id="nameEdit" name="name" required></td>
+    </tr>
+    <tr>
+        <th>Deskripsi</th>
+        <td><textarea name="description" class="form-control" id="descriptionEdit" cols="8" rows="5"></textarea></td>
+    </tr>
+    <tr>
+        <th>Harga Beli</th>
+        <td><input type="number" min=0 class="form-control" id="basePriceEdit" name="basePrice" required></td>
+    </tr>
+    <tr>
+        <th>Harga Jual</th>
+        <td><input type="number" min=1 class="form-control" id="sellingPriceEdit" name="sellingPrice" required></td>
+    </tr>
+    <tr>
+        <th>Foto Produk</th>
+        <td><input type="file" class="form-control" accept="image/gif, image/jpeg, image/png" id="images" name="images"></td>
+    </tr>
+</table>
+</div>
+<div class="modal-footer justify-content-between">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
 
 </div>
 
@@ -342,7 +483,48 @@ All rights reserved.
       "autoWidth": false,
       "responsive": true,
     });
+
+
+    $('.edit_user').click(function(e){
+    $('#id_user').val(e.target.getAttribute('data-id_user'));
+    $('#name').val(e.target.getAttribute('data-name'));
+    $('#email').val(e.target.getAttribute('data-email'));
+    $('#birthplace').val(e.target.getAttribute('data-birthplace'));
+    $('#birthdate').val(e.target.getAttribute('data-birthdate'));
+    if(e.target.getAttribute('data-gender')=='Laki-Laki'){
+        $('#laki').prop("checked",true);
+    }else{
+        $('#wanita').prop("checked",true);
+    }
+    $('#gender').val(e.target.getAttribute('data-gender'));
   });
 
+  $('.edit_product').click(function(e){
+    console.log(e);
+    $('#id_productEdit').val(e.target.getAttribute('data-id_product'));
+    $('#nameEdit').val(e.target.getAttribute('data-name'));
+    $('#descriptionEdit').val(e.target.getAttribute('data-description'));
+    $('#basePriceEdit').val(e.target.getAttribute('data-basePrice'));
+    $('#sellingPriceEdit').val(e.target.getAttribute('data-sellingPrice'));
+  });
+
+  $('.open_modal').on('hidden.bs.modal',function(){
+    $('#id_user').val('');
+    $('#name').val('');
+    $('#email').val('');
+    $('#birthplace').val('');
+    $('#birthdate').val('');
+    $('#laki').prop("checked",false);
+    $('#wanita').prop("checked",false);
+  });
+
+  $('.add_modal').on('hidden.bs.modal',function(){
+    $('#name').val('');
+    $('#description').val('');
+    $('#basePrice').val('');
+    $('#sellingPrice').val('');
+    $('#images').val('');
+  });
+});
 </script>
 @endauth

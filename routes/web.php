@@ -28,4 +28,11 @@ Route::post('password', [UsersAuthController::class, 'password_action'])->name('
 Route::get('logout', [UsersAuthController::class, 'logout'])->name('logout');
 
 Route::get('userList', [UsersAuthController::class, 'userList'])->name('userList');
-Route::get('userDelete/{id}', [UsersAuthController::class, 'userDelete'])->name('userDelete');
+Route::get('/userDelete/{id}', [UsersAuthController::class, 'userDelete'])->name('userDelete');
+Route::post('/userUpdate/', [UsersAuthController::class, 'userUpdate'])->name('userUpdate');
+
+
+Route::get('productList', [ProductCRUDController::class, 'productList'])->name('productList');
+Route::get('/productDelete/{id}', [ProductCRUDController::class, 'productDelete'])->name('productDelete');
+Route::post('/productAdd/', [ProductCRUDController::class, 'productAdd'])->name('productAdd');
+Route::post('/productUpdate/', [ProductCRUDController::class, 'productUpdate'])->name('productUpdate');

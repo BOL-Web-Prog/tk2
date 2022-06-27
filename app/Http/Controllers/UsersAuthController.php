@@ -92,29 +92,32 @@ class UsersAuthController extends Controller
            return back()->with('success', 'Password changed!');
        }
 
-       public function edit(Request $request)
+       public function userUpdate(Request $request)
        {
         $request->validate([
             'name' => 'required',
             'birthplace' => 'required',
             'birthdate' => 'required',
             'gender' =>'required',
-            'email' => 'required|unique:tbl_user',
+            'email' => 'required',
         ]);
+        $update = User::find($request->id);
+        $update->name =  $request->name;
+        $update->birthplace =  $request->birthplace;
+        $update->birthdate =  date("Y-m-d",strtotime($request->birthdate));
+        $update->gender =  $request->gender;
+        $update->email =  $request->email;
+        $update->save();
 
-        $regis = new User([
-            'name' => $request->name,
-            'birthplace' => $request->birthplace,
-            'birthdate' => date("Y-m-d",strtotime($request->birthdate)),
-            'gender' => $request->gender,
-            'email' => $request->email,
-        ]);
+        return redirect()->intended('userList')->with('success', 'Data user berhasil diupdate');
        }
 
        
        public function userDelete($id)
        {
-        
+        $user=User::find($id);
+        $user->delete();
+        return redirect()->intended('userList')->with('success', 'Data user berhasil dihapus');
        }
        public function logout(Request $request) {
         Auth::logout();
