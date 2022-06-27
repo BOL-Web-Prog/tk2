@@ -15,8 +15,13 @@ use App\Http\Controllers\UsersAuthController;
 |
 */
 
+
+
+
 Route::get('/', function () {
-    return view('home', ['title' => 'Dashboard','meta'=>'Dashboard']);
+    $data['registered_user'] = DB::table('tbl_user')->count();
+    $data['registered_product'] = DB::table('tbl_product')->count();
+    return view('home', ['title' => 'Dashboard','meta'=>'Dashboard', 'data'=>$data]);
 })->name('home');
 
 Route::get('register', [UsersAuthController::class, 'register'])->name('register');
