@@ -16,7 +16,7 @@ use App\Http\Controllers\UsersAuthController;
 */
 
 Route::get('/', function () {
-    return view('home', ['title' => 'Dashboard']);
+    return view('home', ['title' => 'Dashboard','meta'=>'Dashboard']);
 })->name('home');
 
 Route::get('register', [UsersAuthController::class, 'register'])->name('register');
@@ -26,3 +26,6 @@ Route::post('login', [UsersAuthController::class, 'login_action'])->name('login.
 Route::get('password', [UsersAuthController::class, 'password'])->name('password');
 Route::post('password', [UsersAuthController::class, 'password_action'])->name('password.action');
 Route::get('logout', [UsersAuthController::class, 'logout'])->name('logout');
+
+Route::get('userList', [UsersAuthController::class, 'userList'])->name('userList');
+Route::get('userDelete/{id}', [UsersAuthController::class, 'userDelete'])->name('userDelete');

@@ -11,6 +11,14 @@ use illuminate\Support\Facades\Auth;
 
 class UsersAuthController extends Controller
 {
+        public function userList()
+        {
+            $data['title'] = 'Data Users';
+            $data['meta'] = 'User';
+            $data['list'] = User::orderBy('id','desc')->paginate(10);
+            return view('user/userList', $data);    
+        }
+
 
        public function register()
         {
@@ -104,7 +112,10 @@ class UsersAuthController extends Controller
        }
 
        
-
+       public function userDelete($id)
+       {
+        
+       }
        public function logout(Request $request) {
         Auth::logout();
         $request->session()->invalidate();

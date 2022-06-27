@@ -24,6 +24,10 @@
 
 <link rel="stylesheet" href="{{ URL::asset('plugins/summernote/summernote-bs4.min.css')}}">
 
+<link rel="stylesheet" href="{{ URL::asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ URL::asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{ URL::asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+
 
 <body class="sidebar-mini layout-fixed sidebar-closed" style="height: auto;">
 <div class="wrapper">
@@ -170,8 +174,7 @@ Nora Silvester
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 <a href="index3.html" class="brand-link">
-<img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-<span class="brand-text font-weight-light">AdminLTE 3</span>
+<span class="brand-text font-weight-light">TK 1 | WEB PROGRAMMING</span>
 </a>
 
 <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 871px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
@@ -199,8 +202,12 @@ Nora Silvester
 <nav class="mt-2">
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-<li class="nav-item menu-open">
-<a href="{{route('home')}}" class="nav-link active">
+<li class="nav-item">
+    @if($meta=='Dashboard')
+    <a href="{{route('home')}}" class="nav-link active">
+    @else
+    <a href="{{route('home')}}" class="nav-link">
+    @endif
 <i class="nav-icon fas fa-tachometer-alt"></i>
 <p>
 Dashboard
@@ -208,7 +215,11 @@ Dashboard
 </a>
 </li>
 <li class="nav-item">
-<a href="pages/widgets.html" class="nav-link">
+    @if($meta=='User')
+    <a href="{{route('userList')}}" class="nav-link active">
+    @else
+    <a href="{{route('userList')}}" class="nav-link">
+    @endif
 <i class="nav-icon fas fa-users"></i>
 <p>
 Users
@@ -216,10 +227,14 @@ Users
 </a>
 </li>
 <li class="nav-item">
-<a href="#" class="nav-link">
+    @if($meta=='Product')
+    <a href="" class="nav-link active">
+    @else
+    <a href="" class="nav-link">
+    @endif
 <i class="nav-icon fas fa-table"></i>
 <p>
-Tables
+Products
 </p>
 </a>
 </li>
@@ -302,4 +317,32 @@ All rights reserved.
 <script src="{{ URL::asset('dist/js/adminlte.js?v=3.2.0')}}"></script>
 
 <script src="{{ URL::asset('dist/js/pages/dashboard.js')}}"></script>
+
+
+<script src="{{ URL::asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+
+<script src="{{ URL::asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script>
+    
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+</script>
 @endauth
