@@ -13,9 +13,9 @@
 <p>Registered Users</p>
 </div>
 <div class="icon">
-<i class="ion ion-bag"></i>
+<i class="fas fa-user"></i>
 </div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+<a href="{{route('userList')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 </div>
 </div>
 
@@ -23,13 +23,13 @@
 
 <div class="small-box bg-success">
 <div class="inner">
-<h3>53<sup style="font-size: 20px">%</sup></h3>
+<h3>53<sup style="font-size: 20px"></sup></h3>
 <p>Registered Product</p>
 </div>
 <div class="icon">
-<i class="ion ion-stats-bars"></i>
+<i class="ion ion-bag"></i>
 </div>
-<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+<a href="{{route('productList')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 </div>
 </div>
 </div>
@@ -135,12 +135,8 @@
 <div class="modal-footer justify-content-between">
 </div>
 </div>
-
 </div>
-
 </div>
-
-
 <script src="{{ URL::asset('plugins/jquery/jquery.min.js'); }}"></script>
 <script src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js'); }}"></script>
 <script src="{{ URL::asset('dist/js/adminlte.min.js?v=3.2.0'); }}"></script>

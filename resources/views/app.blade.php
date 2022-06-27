@@ -258,7 +258,7 @@ Products
 </div>
 <div class="col-sm-6">
 <ol class="breadcrumb float-sm-right">
-<li class="breadcrumb-item"><a href="#">Home</a></li>
+<li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
 <li class="breadcrumb-item active">@yield('title', $title)</li>
 </ol>
 </div>
@@ -500,7 +500,6 @@ All rights reserved.
   });
 
   $('.edit_product').click(function(e){
-    console.log(e);
     $('#id_productEdit').val(e.target.getAttribute('data-id_product'));
     $('#nameEdit').val(e.target.getAttribute('data-name'));
     $('#descriptionEdit').val(e.target.getAttribute('data-description'));
@@ -524,6 +523,14 @@ All rights reserved.
     $('#basePrice').val('');
     $('#sellingPrice').val('');
     $('#images').val('');
+  });
+
+  $('.edit_product').on('hidden.bs.modal',function(){
+    $('#id_productEdit').val('');
+    $('#nameEdit').val('');
+    $('#descriptionEdit').val('');
+    $('#basePriceEdit').val('');
+    $('#sellingPriceEdit').val('');
   });
 });
 </script>
