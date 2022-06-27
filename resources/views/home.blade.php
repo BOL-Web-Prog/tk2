@@ -111,7 +111,7 @@
 </div>
 </form>
 <p class="mb-1">
-<a href="{{ route('register') }}">Register Account</a>
+<a href="{{ route('register') }}">Register User</a>
 </p>
 <p class="mb-1">
 <a href="#" data-toggle="modal" data-target="#modal-team">Lihat Anggota Team</a>
