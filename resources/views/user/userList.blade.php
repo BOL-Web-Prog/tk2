@@ -19,7 +19,10 @@
                     <th>Tempat Lahir</th>
                     <th>Tanggal Lahir</th>
                     <th>Gender</th>
+                    <th>Permission</th>
+                    @if(Session::get('role')=='admin')
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +33,10 @@
                     <td>{{ $data->birthplace }}</td>
                     <td>{{ date("d, F Y",strtotime($data->birthdate)) }}</td>
                     <td>{{ $data->gender }}</td>
-                    <td><a href="#" class="edit_user"data-id_user="{{$data->id}}"  data-name="{{$data->name}}" data-email="{{$data->email}}" data-birthplace="{{$data->birthplace}}" data-birthdate="{{date("Y-m-d",strtotime($data->birthdate))}}" data-gender="{{$data->gender}}" data-toggle="modal" data-target="#modal-default">Edit</a> | <a href="{{ route('userDelete', ['id' => $data->id]) }}">Delete</a></td>
+                    <td>{{ ucfirst($data->permission) }}</td>
+                    @if(Session::get('role')=='admin')
+                    <td><a href="#" class="edit_user"data-id_user="{{$data->id}}"  data-name="{{$data->name}}" data-email="{{$data->email}}" data-birthplace="{{$data->birthplace}}" data-birthdate="{{date("Y-m-d",strtotime($data->birthdate))}}" data-gender="{{$data->gender}}"data-permission="{{$data->permission}}"  data-toggle="modal" data-target="#modal-default">Edit</a> | <a href="{{ route('userDelete', ['id' => $data->id]) }}">Delete</a></td>
+                    @endif
                 </tr>        
                 @endforeach
             </tbody>

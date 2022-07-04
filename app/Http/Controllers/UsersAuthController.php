@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +16,10 @@ class UsersAuthController extends Controller
         {
             $data['title'] = 'Data Users';
             $data['meta'] = 'User';
-            $data['list'] = User::orderBy('id','desc')->paginate(10);
+            //$data['list'] = User::orderBy('id','desc')->paginate(10);
+            $data['list'] = User::leftjoin('tbl_permission', function($join){
+                $join->on('tbl_user.id','=','tbl_permission.id_user');
+            })->orderBy('tbl_user.id','desc')->paginate(10);
             return view('user/userList', $data);    
         }
 
@@ -37,6 +41,14 @@ class UsersAuthController extends Controller
             'password' => 'required',
         ]);
 
+        $registered_user = DB::table('tbl_user')->count();
+        if($registered_user==0){
+            $role='admin';
+        }else{
+            $role='user';
+        }
+       
+
         $regis = new User([
             'name' => $request->name,
             'birthplace' => $request->birthplace,
@@ -45,8 +57,12 @@ class UsersAuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
         $regis->save();
+        $permissionUpdate = new Permission([
+            'id_user'=>$regis->id,
+            'permission'=>$role
+        ]);
+        $permissionUpdate->save();
         return redirect()->route('login')->with('betul', 'Registration success. Please login!');
        }
 
@@ -66,6 +82,9 @@ class UsersAuthController extends Controller
         
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
+            $getId = User::where('email',$request->email)->first('id');
+            $getRole = Permission::where('id_user',$getId['id'])->first('permission');
+            Session::put('role',$getRole['permission']);        
             return redirect()->intended('/')->with('success', 'Anda Berhasil Login');
         }
             return back()->withErrors([
@@ -100,6 +119,7 @@ class UsersAuthController extends Controller
             'birthdate' => 'required',
             'gender' =>'required',
             'email' => 'required',
+            'permission'=>'required'
         ]);
         $update = User::find($request->id);
         $update->name =  $request->name;
@@ -108,6 +128,12 @@ class UsersAuthController extends Controller
         $update->gender =  $request->gender;
         $update->email =  $request->email;
         $update->save();
+
+        $permissionUpdate = new Permission([
+            'id_user'=>$request->id,
+            'permission'=>$request->permission
+        ]);
+        $permissionUpdate->save();
 
         return redirect()->intended('userList')->with('success', 'Data user berhasil diupdate');
        }
@@ -121,6 +147,7 @@ class UsersAuthController extends Controller
        }
        public function logout(Request $request) {
         Auth::logout();
+        Session::forget('role');
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');

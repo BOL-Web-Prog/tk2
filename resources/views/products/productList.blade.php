@@ -11,7 +11,9 @@
         <p class="alert alert-danger">{{ $err }}</p>
         @endforeach
         @endif
+        @if(Session::get('role')=='admin')
         <button class="btn btn-primary" data-toggle="modal" data-target="#modal-add"> <i class="nav-icon fas fa-plus"></i> Tambah Produk</button>
+        @endif
         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline collapsed" role="grid" aria-describedby="example2_info">
             <thead>
                 <tr>
@@ -20,7 +22,9 @@
                     <th>Harga Beli</th>
                     <th>Harga Jual</th>
                     <th>Gambar</th>
+                    @if(Session::get('role')=='admin')
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +35,9 @@
                     <td>{{ number_format($data->basePrice,2) }}</td>
                     <td>{{ number_format($data->sellingPrice,2) }}</td>
                     <td><img src="{{ asset('foto_produk/'.$data->images) }}" height="130px" width="130px"></td>
+                    @if(Session::get('role')=='admin')
                     <td><a href="#" class="edit_product" data-id_product="{{$data->id}}"  data-name="{{$data->name}}" data-description="{{$data->description}}" data-basePrice="{{$data->basePrice}}" data-sellingPrice="{{$data->sellingPrice}}"  data-toggle="modal" data-target="#modal-edit">Edit</a> | <a href="{{ route('productDelete', ['id' => $data->id]) }}">Delete</a></td>
+                    @endif
                 </tr>        
                 @endforeach
             </tbody>

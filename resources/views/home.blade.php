@@ -5,8 +5,8 @@
 <a class="btn btn-primary" href="{{ route('password') }}">Change Password</a>
 <a class="btn btn-danger" href="{{ route('logout') }}">Logout</a> -->
 <div class="row">
+@if(Session::get('role')=='admin')
 <div class="col-lg-3 col-6">
-
 <div class="small-box bg-info">
 <div class="inner">
 <h3>{{$data['registered_user']}}</h3>
@@ -18,6 +18,7 @@
 <a href="{{route('userList')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 </div>
 </div>
+@endif
 
 <div class="col-lg-3 col-6">
 

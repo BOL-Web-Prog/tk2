@@ -2,7 +2,7 @@
 <html lang="en" style="height: auto;"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TK1 | @yield('title', $title)</title>
+<title>TK2 | @yield('title', $title)</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
 
@@ -177,7 +177,7 @@ Nora Silvester
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 <a href="index3.html" class="brand-link">
-<span class="brand-text font-weight-light">TK 1 | WEB PROGRAMMING</span>
+<span class="brand-text font-weight-light">TK 2 | WEB PROGRAMMING</span>
 </a>
 
 <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 871px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
@@ -217,6 +217,7 @@ Dashboard
 </p>
 </a>
 </li>
+@if(Session::get('role')=='admin')
 <li class="nav-item">
     @if($meta=='User')
     <a href="{{route('userList')}}" class="nav-link active">
@@ -229,6 +230,7 @@ Users
 </p>
 </a>
 </li>
+@endif
 <li class="nav-item">
     @if($meta=='Product')
     <a href="{{route('productList')}}" class="nav-link active">
@@ -305,6 +307,14 @@ Products
     <tr>
         <th>Jenis Kelamin</th>
         <td><input type="radio" id="laki" value="Laki-Laki" name="gender"> Laki-Laki <input type="radio" id="wanita" name="gender" value="Wanita"> Wanita</td>
+    </tr>
+
+    <tr>
+        <th>Permission</th>
+        <td><select name="permission" class="form-control" id="permission">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+        </select></td>
     </tr>
 </table>
 </div>
@@ -497,6 +507,7 @@ All rights reserved.
         $('#wanita').prop("checked",true);
     }
     $('#gender').val(e.target.getAttribute('data-gender'));
+    $('#permission').val(e.target.getAttribute('data-permission')).change();
   });
 
   $('.edit_product').click(function(e){
